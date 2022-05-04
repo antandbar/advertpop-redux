@@ -1,0 +1,18 @@
+.newAdvertPage-form {
+    border: 1px solid grey;
+    border-radius: 50px;
+    width: 360px;
+    background-color: rgba(0,100,0, 0.1);
+    margin-left: 30px;
+}
+.newAdvertPage-components {
+    margin-top: 20px;
+    margin-left: 60px;
+}
+.newAdvertPage-photo {
+    margin-bottom: 20px;
+}
+.newAdvertPage-submit {
+    margin-top: 20px;
+    margin-left: 110px;
+}

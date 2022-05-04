@@ -1,0 +1,29 @@
+.header {
+  align-items: center;
+  display: flex;
+}
+
+.header-logo {
+  background-color: transparent;
+  border-radius: 9999px;
+  height: 48px;
+  width: 48px;
+}
+
+.header-nav {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.header-nav .active {
+  color: green;
+}
+.header-navLink {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+.header-button {
+  width: 144px;
+  margin-left: 10px;
+}

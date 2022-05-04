@@ -1,0 +1,26 @@
+.layout-header {
+  background-color: white;
+  border-bottom-width: 1px;
+  height: 64px;
+  position: sticky;
+  top: 0;
+}
+
+.layout-main {
+  margin-left: 5%;
+  margin-right: 40%;
+  max-width: 100%;
+  min-height: calc(100vh - 128px);
+}
+
+.layout-footer {
+  align-items: center;
+  border-top-width: 1px;
+  display: flex;
+  height: 64px;
+}
+
+.layout-header,
+.layout-footer {
+  padding: 0 15px;
+}

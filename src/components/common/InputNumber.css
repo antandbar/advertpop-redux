@@ -1,0 +1,10 @@
+.InputNumber-input {
+  width: 100px;
+  margin-left: 8px;
+  border: 0.1px rgb(101, 119, 134) solid;
+  border-radius: 5px;
+  background-color: aliceblue;
+}
+.InputNumber-input:focus {
+  outline: none;
+}

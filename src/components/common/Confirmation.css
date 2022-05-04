@@ -1,0 +1,19 @@
+.confirmation {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 280px;
+  height: 100px;
+  padding: 5px;
+}
+
+.confirmation-label {
+  color: red;
+  margin-left: 15px;
+}
+
+.confirmation-div-buttons {
+  margin-top: 20px;
+}
+.confirmation-button {
+  margin-left: 30px;
+}

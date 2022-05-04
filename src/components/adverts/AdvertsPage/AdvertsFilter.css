@@ -1,0 +1,22 @@
+.filter {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-title {
+    margin-bottom: 5px;
+    margin-left: 15px;
+}
+.filter-body {
+    display: flex;
+    flex-direction: row;
+    margin-left: 30px; 
+}
+.filter-item {
+    margin-right: 50px;
+}
+.filter-submit {
+    height: 20px;
+    width: 100px;
+    margin-top: 40px; 
+}

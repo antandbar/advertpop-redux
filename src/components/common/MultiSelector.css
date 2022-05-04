@@ -1,0 +1,16 @@
+.multiselector-select {
+  margin-left: 8px;
+  margin-top: 8px;
+  border: 1px solid grey;
+  background-color: aliceblue;
+  border-radius: 6px;
+  width: 70px;
+}
+
+.multiselector-select:focus {
+  outline: none;
+}
+
+.multiselector-option {
+  margin-left: 8px;
+}

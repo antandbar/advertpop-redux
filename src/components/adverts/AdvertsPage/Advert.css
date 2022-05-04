@@ -1,0 +1,21 @@
+.advert {
+  border-bottom-width: 1px;
+  cursor: pointer;
+  display: flex;
+  padding: 10px 15px 0 15px;
+  transition: background-color 0.2s;
+}
+
+.advert:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.advert-content {
+  color: rgb(101, 119, 134);
+  margin-bottom: 2px;
+}
+
+.advert-data {
+  color: rgb(20, 23, 26);
+  font-weight: bold;
+}

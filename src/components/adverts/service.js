@@ -26,22 +26,8 @@ const transformRange = range => {
   };
 };
 
-export const getAdverts = (name, isSale, range, multiSelector) => {
-  const rangeObj = transformRange(range);
-
-  let url = `${advertsBaseUrl}`;
-  name ? (url += `?name=${name}`) : (url += `?name=`);
-
-  if (isSale && (isSale === 'true' || isSale === 'false'))
-    url += `&sale=${isSale}`;
-
-  if (rangeObj) url += `&price=${rangeObj.rangeMin}&price=${rangeObj.rangeMax}`;
-
-  if (multiSelector) {
-    multiSelector?.forEach(tag => {
-      url += `&tags=${tag}`;
-    });
-  }
+export const getAdverts = () => {
+  const url = advertsBaseUrl;
 
   return client.get(url);
 };

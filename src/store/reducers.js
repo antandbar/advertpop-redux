@@ -13,6 +13,9 @@ import {
     ADVERT_CREATED_REQUEST,
     ADVERT_CREATED_SUCCESS,
     ADVERT_CREATED_FAILURE,
+    TAGS_LOADED_REQUEST,
+    TAGS_LOADED_SUCCESS,
+    TAGS_LOADED_FAILURE
   } from './types';
   
   export const defaultState = {
@@ -25,6 +28,10 @@ import {
       isLoading: false,
       error: null,
     },
+    tags: {
+      loaded: false,
+      data: [],
+    }
   };
   
   export const auth = (state = defaultState.auth, action) => {
@@ -48,21 +55,33 @@ import {
         return state;
     }
   };
+
+  export const tags = (state = defaultState.tags, action) => {
+    switch (action.type) {
+      case TAGS_LOADED_SUCCESS:
+        return { loaded: true, data: action.payload };
+      default:
+        return state;
+    }
+  };
   
   export const ui = (state = defaultState.ui, action) => {
     switch (action.type) {
       case AUTH_LOGIN_REQUEST:
       case ADVERTS_LOADED_REQUEST:
+      case TAGS_LOADED_REQUEST:
       case ADVERT_LOADED_REQUEST:
       case ADVERT_CREATED_REQUEST:
         return { ...state, isLoading: true, error: null };
       case AUTH_LOGIN_SUCCESS:
       case ADVERTS_LOADED_SUCCESS:
+      case TAGS_LOADED_SUCCESS:
       case ADVERT_LOADED_SUCCESS:
       case ADVERT_CREATED_SUCCESS:
         return { ...state, isLoading: false };
       case AUTH_LOGIN_FAILURE:
       case ADVERTS_LOADED_FAILURE:
+      case TAGS_LOADED_FAILURE:
       case ADVERT_LOADED_FAILURE:
       case ADVERT_CREATED_FAILURE:
         return { ...state, isLoading: false, error: action.payload };

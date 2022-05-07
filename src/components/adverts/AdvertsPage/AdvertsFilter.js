@@ -4,8 +4,22 @@ import InputRadio from '../../common/InputRadio';
 import InputSearch from '../../common/InputSearch';
 import SliderBar from '../../common/PriceSliderBar';
 import TextArea from '../../common/MultiSelector';
-import { getTags } from '../service';
 import './AdvertsFilter.css';
+import { tagsLoaded } from '../../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTags } from '../../../store/selectors';
+
+
+const useTags = () => {
+  const dispatch = useDispatch();
+  const tags = useSelector(getTags);
+
+  useEffect(() => {
+    dispatch(tagsLoaded());
+  }, [dispatch]);
+
+  return tags;
+};
 
 // maneja como un wraper los filtros
 const AdvertsFilter = ({
@@ -16,11 +30,8 @@ const AdvertsFilter = ({
   changeMultiSelector,
 }) => {
   const [range, setRange] = useState([0, 10000]);
-  const [tags, setTags] = useState([]);
+  const tags = useTags();
 
-  useEffect(() => {
-    getTags().then(tags => setTags(tags));
-  }, []);
 
   const handleInputName = e => {
     changeNameFilter(e.target.value);

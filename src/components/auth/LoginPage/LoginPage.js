@@ -1,11 +1,14 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import FormField from '../../common/FormField';
-import { login } from '../service';
-import AuthContext from '../context';
-
 import './LoginPage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  authLogin,
+  uiResetError,
+} from '../../../store/actions';
+import { getUi } from '../../../store/selectors';
 
 function LoginPage() {
   const ref = useRef(null);
@@ -16,9 +19,10 @@ function LoginPage() {
     password: '',
     remember: false,
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { handleLogin: onLogin } = useContext(AuthContext);
+  
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector(getUi);
+
 
   useEffect(() => {
     ref.current.focus();
@@ -37,22 +41,14 @@ function LoginPage() {
     }));
   };
 
-  const resetError = () => setError(null);
+  const resetError = () => dispatch(uiResetError());
 
   const handleSubmit = async event => {
     event.preventDefault();
-    try {
-      resetError();
-      setIsLoading(true);
-      await login(credentials);
-      setIsLoading(false);
-      onLogin();
+    dispatch(authLogin(credentials)).then(() => {
       const from = location.state?.from?.pathname || '/';
       navigate(from, { replace: true });
-    } catch (error) {
-      setError(error);
-      setIsLoading(false);
-    }
+    });
   };
 
   return (

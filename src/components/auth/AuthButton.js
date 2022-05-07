@@ -1,16 +1,16 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../common/Button';
 
-import { logout } from '../auth/service';
-import AuthContext from './context';
+import { authLogout } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIsLogged } from '../../store/selectors';
 // se maneja el login y logout
 function AuthButton({ className }) {
-  const { isLogged, handleLogout: onLogout } = useContext(AuthContext);
+  const isLogged = useSelector(getIsLogged);
+  const dispatch = useDispatch();
 
   const handleLogoutClick = async () => {
-    await logout();
-    onLogout();
+    dispatch(authLogout());
   };
 
   return isLogged ? (

@@ -6,7 +6,32 @@ import AdvertsFilter from './AdvertsFilter';
 import Page from '../../layout/Page';
 import { advertsLoaded } from '../../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAdverts } from '../../../store/selectors';
+import { getAdverts, getAdvertsFilter } from '../../../store/selectors';
+
+// el rango menor siempre es min y mayor max
+const transformRange = range => {
+  let rangeMin, rangeMax;
+  if (range) {
+    if (range[0] > range[1]) {
+      rangeMax = range[0];
+      rangeMin = range[1];
+    } else if (range[1] > range[0]) {
+      rangeMax = range[1];
+      rangeMin = range[0];
+    } else {
+      rangeMax = range[1];
+      rangeMin = range[0];
+    }
+  } else {
+    rangeMax = 10000;
+    rangeMin = 0;
+  }
+
+  return {
+    rangeMax,
+    rangeMin,
+  };
+};
 
 // En caso de no haber anuncios
 const EmptyList = () => (
@@ -29,12 +54,23 @@ const useAdverts = () => {
   return adverts;
 };
 
+
 const AdvertsPage = () => {
+  const [filter, setFilter] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
   const [isSaleFilter, setIsSaleFilter] = useState('');
   const [rangeFilter, setRangeFilter] = useState('');
   const [isFilter, setIsFilter] = useState(true);
   const [multiSelectorFilter, setMultiSelectorFilter] = useState([]);
+  let adverts;
+  const advertsAll = useAdverts();
+  const advertsFilter = useSelector(getAdvertsFilter(nameFilter,isSaleFilter, transformRange(rangeFilter), multiSelectorFilter));
+
+  if (filter.length) {
+    adverts = filter;
+  } else {
+    adverts = advertsAll;
+  }
 
   const changeNameFilter = name => {
     setNameFilter(name);
@@ -49,13 +85,9 @@ const AdvertsPage = () => {
     setMultiSelectorFilter(multiSelector);
   };
   const sendAllFilters = () => {
-/*     getAdverts(nameFilter, isSaleFilter, rangeFilter, multiSelectorFilter).then(
-      adverts => setAdverts(adverts),
-    );
-    setIsFilter(true); */
+    setFilter(advertsFilter);
+    setIsFilter(true);
   };
-
-  const adverts = useAdverts();
 
   return (
     <Page title="Anuncios">

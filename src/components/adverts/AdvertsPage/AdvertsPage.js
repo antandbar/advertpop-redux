@@ -43,34 +43,24 @@ const EmptyList = () => (
   </div>
 );
 
-const useAdverts = () => {
-  const dispatch = useDispatch();
-  const adverts = useSelector(getAdverts);
-
-  useEffect(() => {
-    dispatch(advertsLoaded());
-  }, [dispatch]);
-
-  return adverts;
-};
-
 
 const AdvertsPage = () => {
-  const [filter, setFilter] = useState([]);
   const [nameFilter, setNameFilter] = useState('');
   const [isSaleFilter, setIsSaleFilter] = useState('');
   const [rangeFilter, setRangeFilter] = useState('');
   const [isFilter, setIsFilter] = useState(true);
   const [multiSelectorFilter, setMultiSelectorFilter] = useState([]);
-  let adverts;
-  const advertsAll = useAdverts();
+  const dispatch = useDispatch();
+  const [adverts, setAdverts] = useState([]);
   const advertsFilter = useSelector(getAdvertsFilter(nameFilter,isSaleFilter, transformRange(rangeFilter), multiSelectorFilter));
+  const AdvertsSelector = useSelector(getAdverts);
+  
+  
+  useEffect(() => {
+    setAdverts(AdvertsSelector);
+    dispatch(advertsLoaded());
+  }, [dispatch,AdvertsSelector]);
 
-  if (filter.length) {
-    adverts = filter;
-  } else {
-    adverts = advertsAll;
-  }
 
   const changeNameFilter = name => {
     setNameFilter(name);
@@ -85,7 +75,7 @@ const AdvertsPage = () => {
     setMultiSelectorFilter(multiSelector);
   };
   const sendAllFilters = () => {
-    setFilter(advertsFilter);
+    setAdverts(advertsFilter);
     setIsFilter(true);
   };
 

@@ -135,7 +135,7 @@ export const advertLoadedFailure = error => ({
   error: true,
 });
 
-export const advertLoaded = advertId => {
+export const advertLoaded = (advertId,navigate) => {
   return async function (dispatch, getState, { api }) {
     const advertLoaded = getAdvert(advertId)(getState());
     if (advertLoaded) return;
@@ -145,7 +145,7 @@ export const advertLoaded = advertId => {
       dispatch(advertLoadedSuccess(advert));
     } catch (error) {
       dispatch(advertLoadedFailure(error));
-      throw error;
+      navigate('/404');
     }
   };
 };

@@ -3,24 +3,24 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Page from '../../layout/Page';
 import Advert from '../AdvertsPage/Advert';
-import { getAdvert, deleteAdvert } from '../service';
+import { deleteAdvert } from '../service';
 import './AdvertPage.css';
 import Confirmation from '../../common/Confirmation';
+import { useDispatch, useSelector } from 'react-redux';
+import { advertLoaded } from '../../../store/actions';
+import { getAdvert } from '../../../store/selectors';
 
 const AdvertPage = () => {
-  const [advert, setAdvert] = useState(null);
+  /* const [advert, setAdvert] = useState(null); */
   const { id } = useParams();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
+  const advert = useSelector(getAdvert(id));
 
   useEffect(() => {
-    // se busca anuncio, si no se encuentra manda a 404
-    getAdvert(id)
-      .then(advert => setAdvert(advert))
-      .catch(() => {
-        navigate('/404');
-      });
-  }, [id, navigate]);
+    dispatch(advertLoaded(id, navigate));
+  }, [dispatch, id, navigate]);
 
   const handleDeleteAdvert = e => {
     e.preventDefault();

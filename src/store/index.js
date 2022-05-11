@@ -31,7 +31,7 @@ const timestamp = () => next => action => {
 };
 
 
-const configureStore = preloadedState => {
+const configureStore = (preloadedState) => {
   const middlewares = [thunk.withExtraArgument({ api })/*, logger*/, timestamp];
 
   const store = createStore(

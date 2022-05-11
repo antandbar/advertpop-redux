@@ -5,12 +5,12 @@ import Button from '../../common/Button';
 import InputSearch from '../../common/InputSearch';
 import InputRadio from '../../common/InputRadio';
 import TextArea from '../../common/MultiSelector';
-import { createAdvert} from '../service';
 import InputNumber from '../../common/InputNumber';
 import InputFile from '../../common/InputFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { tagsLoaded } from '../../../store/actions';
 import { getTags } from '../../../store/selectors';
+import { advertCreated } from '../../../store/actions';
 import './NewAdvertPage.css';
 
 const useTags = () => {
@@ -31,6 +31,7 @@ const NewAdvertPage = () => {
   const [multiSelector, setMultiselector] = useState(null);
   const [price, setPrice] = useState(null);
   const [inputFile, setInputFile] = useState(null);
+  const dispatch = useDispatch();
   const tags = useTags();
 
 
@@ -82,10 +83,11 @@ const NewAdvertPage = () => {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    createAdvert(advertFormData()).then(advertResp => {
+    dispatch(advertCreated(advertFormData(),navigate));
+/*     createAdvert(advertFormData()).then(advertResp => {
       let advert = advertResp;
       navigate(`/adverts/${advert.id}`);
-    });
+    }); */
   };
 
   return (

@@ -157,8 +157,9 @@ export const advertCreatedRequest = () => ({
   type: ADVERT_CREATED_REQUEST,
 });
 
-export const advertCreatedSuccess = () => ({
+export const advertCreatedSuccess = (advert) => ({
   type: ADVERT_CREATED_SUCCESS,
+  payload: advert
 });
 
 export const advertCreatedFailure = error => ({
@@ -167,14 +168,13 @@ export const advertCreatedFailure = error => ({
   error: true,
 });
 
-export const advertCreated = advert => {
+export const advertCreated = (advert,navigate) => {
   return async function (dispatch, getState, { api }) {
     dispatch(advertCreatedRequest());
     try {
       const createdAdvert = await api.adverts.createAdvert(advert);
-      console.log(createdAdvert);
-      dispatch(advertCreatedSuccess());
-      return createdAdvert;
+      dispatch(advertCreatedSuccess(createdAdvert));
+      navigate(`/adverts/${createdAdvert.id}`);
     } catch (error) {
       dispatch(advertCreatedFailure(error));
       throw error;

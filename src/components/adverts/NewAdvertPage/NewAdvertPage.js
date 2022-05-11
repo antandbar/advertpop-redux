@@ -5,23 +5,34 @@ import Button from '../../common/Button';
 import InputSearch from '../../common/InputSearch';
 import InputRadio from '../../common/InputRadio';
 import TextArea from '../../common/MultiSelector';
-import { createAdvert, getTags } from '../service';
+import { createAdvert} from '../service';
 import InputNumber from '../../common/InputNumber';
 import InputFile from '../../common/InputFile';
+import { useDispatch, useSelector } from 'react-redux';
+import { tagsLoaded } from '../../../store/actions';
+import { getTags } from '../../../store/selectors';
 import './NewAdvertPage.css';
+
+const useTags = () => {
+  const dispatch = useDispatch();
+  const tags = useSelector(getTags);
+
+  useEffect(() => {
+    dispatch(tagsLoaded());
+  }, [dispatch]);
+
+  return tags;
+};
 
 const NewAdvertPage = () => {
   const navigate = useNavigate();
   const [name, setName] = useState(null);
   const [isSale, setIsSale] = useState(null);
   const [multiSelector, setMultiselector] = useState(null);
-  const [tags, setTags] = useState([]);
   const [price, setPrice] = useState(null);
   const [inputFile, setInputFile] = useState(null);
+  const tags = useTags();
 
-  useEffect(() => {
-    getTags().then(tags => setTags(tags));
-  }, []);
 
   const handleInputName = e => {
     setName(e.target.value);

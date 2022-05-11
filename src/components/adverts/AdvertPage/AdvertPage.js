@@ -3,15 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Page from '../../layout/Page';
 import Advert from '../AdvertsPage/Advert';
-import { deleteAdvert } from '../service';
 import './AdvertPage.css';
 import Confirmation from '../../common/Confirmation';
 import { useDispatch, useSelector } from 'react-redux';
-import { advertLoaded } from '../../../store/actions';
+import { advertLoaded, advertDeleted } from '../../../store/actions';
 import { getAdvert } from '../../../store/selectors';
 
 const AdvertPage = () => {
-  /* const [advert, setAdvert] = useState(null); */
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,8 +32,7 @@ const AdvertPage = () => {
   // Al eliminar el anuncio manda index
   const handleConfirmationDelete = async e => {
     e.preventDefault();
-    await deleteAdvert(id);
-    navigate('/adverts');
+    dispatch(advertDeleted(id, navigate));
   };
   return (
     <Page title="Detalle del anuncio">

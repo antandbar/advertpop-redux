@@ -15,7 +15,10 @@ import {
     ADVERT_CREATED_FAILURE,
     TAGS_LOADED_REQUEST,
     TAGS_LOADED_SUCCESS,
-    TAGS_LOADED_FAILURE
+    TAGS_LOADED_FAILURE,
+    ADVERT_DELETED_REQUEST,
+    ADVERT_DELETED_SUCCESS,
+    ADVERT_DELETED_FAILURE
   } from './types';
   
   export const defaultState = {
@@ -51,6 +54,8 @@ import {
         return { loaded: true, data: action.payload };
       case ADVERT_LOADED_SUCCESS:
         return { ...state, data: [...state.data, action.payload] };
+      case ADVERT_DELETED_SUCCESS: 
+        return {...state, data: state.data.filter(advert => advert.id !== action.payload)}; 
       default:
         return state;
     }
@@ -72,18 +77,21 @@ import {
       case TAGS_LOADED_REQUEST:
       case ADVERT_LOADED_REQUEST:
       case ADVERT_CREATED_REQUEST:
+      case ADVERT_DELETED_REQUEST:
         return { ...state, isLoading: true, error: null };
       case AUTH_LOGIN_SUCCESS:
       case ADVERTS_LOADED_SUCCESS:
       case TAGS_LOADED_SUCCESS:
       case ADVERT_LOADED_SUCCESS:
       case ADVERT_CREATED_SUCCESS:
+      case ADVERT_DELETED_SUCCESS:
         return { ...state, isLoading: false };
       case AUTH_LOGIN_FAILURE:
       case ADVERTS_LOADED_FAILURE:
       case TAGS_LOADED_FAILURE:
       case ADVERT_LOADED_FAILURE:
       case ADVERT_CREATED_FAILURE:
+      case ADVERT_DELETED_FAILURE:
         return { ...state, isLoading: false, error: action.payload };
       case UI_RESET_ERROR:
         return { ...state, error: null };

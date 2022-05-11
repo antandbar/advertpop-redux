@@ -17,6 +17,9 @@ import {
   TAGS_LOADED_FAILURE,
   TAGS_LOADED_REQUEST,
   TAGS_LOADED_SUCCESS,
+  ADVERT_DELETED_SUCCESS,
+  ADVERT_DELETED_FAILURE,
+  ADVERT_DELETED_REQUEST
 } from './types';
 
 export const authLoginRequest = () => ({
@@ -174,6 +177,35 @@ export const advertCreated = advert => {
       return createdAdvert;
     } catch (error) {
       dispatch(advertCreatedFailure(error));
+      throw error;
+    }
+  };
+};
+
+export const advertDeletedRequest = () => ({
+  type: ADVERT_DELETED_REQUEST,
+});
+
+export const advertDeletedSuccess = advertId => ({
+  type: ADVERT_DELETED_SUCCESS,
+  payload: advertId,
+});
+
+export const advertDeletedFailure = error => ({
+  type: ADVERT_DELETED_FAILURE,
+  payload: error,
+  error: true,
+});
+
+export const advertDeleted = (advertId,navigate) => {
+  return async function (dispatch, getState, { api }) {
+    dispatch(advertDeletedRequest());
+    try {
+      await api.adverts.deleteAdvert(advertId);
+      dispatch(advertDeletedSuccess(advertId));
+      navigate('/adverts');
+    } catch (error) {
+      dispatch(advertDeletedFailure(error));
       throw error;
     }
   };

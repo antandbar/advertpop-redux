@@ -57,9 +57,10 @@ const AdvertsPage = () => {
   
   
   useEffect(() => {
-    setAdverts(AdvertsSelector);
+    const advertSelectorAux = AdvertsSelector;
+    setAdverts(advertSelectorAux);
     dispatch(advertsLoaded());
-    if (AdvertsSelector.length === 0) setIsFilter(false);
+    if (advertSelectorAux.length === 0) setIsFilter(false);
   }, [dispatch,AdvertsSelector]);
 
 

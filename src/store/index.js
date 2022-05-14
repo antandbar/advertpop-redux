@@ -8,17 +8,6 @@ import * as adverts from '../components/adverts/service';
 
 const api = { auth, adverts };
 
-function logger(store) {
-  return function (next) {
-    return function (action) {
-      console.log('before action', action, store.getState());
-      const result = next(action);
-      console.log('after action', action, store.getState());
-      return result;
-    };
-  };
-}
-
 const timestamp = () => next => action => {
   const newAction = {
     ...action,
@@ -30,9 +19,8 @@ const timestamp = () => next => action => {
   return next(newAction);
 };
 
-
-const configureStore = (preloadedState) => {
-  const middlewares = [thunk.withExtraArgument({ api })/*, logger*/, timestamp];
+const configureStore = preloadedState => {
+  const middlewares = [thunk.withExtraArgument({ api }), timestamp];
 
   const store = createStore(
     combineReducers(reducers),

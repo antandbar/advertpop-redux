@@ -37,11 +37,13 @@ export const authLoginFailure = error => ({
 });
 
 export const authLogin = credentials => {
-  return async function (dispatch, _getState, { api }) {
+  return async function (dispatch, _getState, { api, history }) {
     dispatch(authLoginRequest());
     try {
       await api.auth.login(credentials);
       dispatch(authLoginSuccess());
+/*        const from = history.location.state?.from?.pathname || '/';
+      history.replace(from);  */
     } catch (error) {
       dispatch(authLoginFailure(error));
       throw error;
@@ -138,8 +140,8 @@ export const advertLoadedFailure = error => ({
   error: true,
 });
 
-export const advertLoaded = (advertId,navigate) => {
-  return async function (dispatch, getState, { api }) {
+export const advertLoaded = (advertId) => {
+  return async function (dispatch, getState, { api, history }) {
     const advertLoaded = getAdvert(advertId)(getState());
     if (advertLoaded) return;
     dispatch(advertLoadedRequest());
@@ -148,7 +150,7 @@ export const advertLoaded = (advertId,navigate) => {
       dispatch(advertLoadedSuccess(advert));
     } catch (error) {
       dispatch(advertLoadedFailure(error));
-      navigate('/404');
+      history.push('/404');
     }
   };
 };
@@ -168,13 +170,12 @@ export const advertCreatedFailure = error => ({
   error: true,
 });
 
-export const advertCreated = (advert,navigate) => {
+export const advertCreated = (advert) => {
   return async function (dispatch, getState, { api }) {
     dispatch(advertCreatedRequest());
     try {
       const createdAdvert = await api.adverts.createAdvert(advert);
       dispatch(advertCreatedSuccess(createdAdvert));
-      navigate(`/adverts/${createdAdvert.id}`);
     } catch (error) {
       dispatch(advertCreatedFailure(error));
       throw error;
@@ -197,13 +198,13 @@ export const advertDeletedFailure = error => ({
   error: true,
 });
 
-export const advertDeleted = (advertId,navigate) => {
-  return async function (dispatch, getState, { api }) {
+export const advertDeleted = advertId => {
+  return async function (dispatch, getState, {  api, history  }) {
     dispatch(advertDeletedRequest());
     try {
       await api.adverts.deleteAdvert(advertId);
       dispatch(advertDeletedSuccess(advertId));
-      navigate('/adverts');
+      history.push('/adverts');
     } catch (error) {
       dispatch(advertDeletedFailure(error));
       throw error;

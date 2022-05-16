@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Page from '../../layout/Page';
 import Button from '../../common/Button';
 import InputSearch from '../../common/InputSearch';
@@ -25,7 +24,6 @@ const useTags = () => {
 };
 
 const NewAdvertPage = () => {
-  const navigate = useNavigate();
   const [name, setName] = useState(null);
   const [isSale, setIsSale] = useState(null);
   const [multiSelector, setMultiselector] = useState(null);
@@ -83,11 +81,7 @@ const NewAdvertPage = () => {
   const handleSubmit = async event => {
     event.preventDefault();
 
-    dispatch(advertCreated(advertFormData(),navigate));
-/*     createAdvert(advertFormData()).then(advertResp => {
-      let advert = advertResp;
-      navigate(`/adverts/${advert.id}`);
-    }); */
+    dispatch(advertCreated(advertFormData()));
   };
 
   return (

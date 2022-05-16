@@ -1,28 +1,21 @@
 import { useState, useRef, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 import Button from '../../common/Button';
 import FormField from '../../common/FormField';
 import './LoginPage.css';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  authLogin,
-  uiResetError,
-} from '../../../store/actions';
+import { authLogin, uiResetError } from '../../../store/actions';
 import { getUi } from '../../../store/selectors';
 
 function LoginPage() {
   const ref = useRef(null);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
     remember: false,
   });
-  
+
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector(getUi);
-
 
   useEffect(() => {
     ref.current.focus();
@@ -30,25 +23,19 @@ function LoginPage() {
 
   const { email, password, remember } = credentials;
 
-  const handleChange = event => {
+  const handleChange = ({ target: { value, name, type, checked } }) => {
     setCredentials(credentials => ({
       ...credentials,
       // si es Chekbox se toma checked, si no es así value
-      [event.target.name]:
-        event.target.type === 'checkbox'
-          ? event.target.checked
-          : event.target.value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
   const resetError = () => dispatch(uiResetError());
 
-  const handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
-    dispatch(authLogin(credentials)).then(() => {
-      const from = location.state?.from?.pathname || '/';
-      navigate(from, { replace: true });
-    });
+    dispatch(authLogin(credentials))
   };
 
   return (

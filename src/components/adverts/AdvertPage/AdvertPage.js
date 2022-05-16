@@ -1,6 +1,6 @@
 import Button from '../../common/Button';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Page from '../../layout/Page';
 import Advert from '../AdvertsPage/Advert';
 import './AdvertPage.css';
@@ -12,13 +12,12 @@ import { getAdvert } from '../../../store/selectors';
 const AdvertPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isDelete, setIsDelete] = useState(false);
   const advert = useSelector(getAdvert(id));
 
   useEffect(() => {
-    dispatch(advertLoaded(id, navigate));
-  }, [dispatch, id, navigate]);
+    dispatch(advertLoaded(id));
+  }, [dispatch, id]);
 
   const handleDeleteAdvert = e => {
     e.preventDefault();
@@ -32,7 +31,7 @@ const AdvertPage = () => {
   // Al eliminar el anuncio manda index
   const handleConfirmationDelete = async e => {
     e.preventDefault();
-    dispatch(advertDeleted(id, navigate));
+    dispatch(advertDeleted(id));
   };
   return (
     <Page title="Detalle del anuncio">

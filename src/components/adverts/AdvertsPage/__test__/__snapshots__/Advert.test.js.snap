@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdvertPage snapshot 1`] = `
+<div>
+  <article
+    class="advert bordered"
+  >
+    <div>
+      <div
+        class="advert-content"
+      >
+        <span>
+           El artículo 
+        </span>
+        <span
+          class="advert-data"
+        />
+        <span>
+           se 
+        </span>
+        <span
+          class="advert-data"
+        >
+           
+          compra
+        </span>
+        <span>
+           a un precio de 
+        </span>
+        <span
+          class="advert-data"
+        >
+          €
+        </span>
+      </div>
+      <div
+        class="advert-content"
+      >
+        <span>
+          Tags asociados: 
+        </span>
+        <span
+          class="advert-data"
+        />
+      </div>
+    </div>
+  </article>
+</div>
+`;

@@ -41,9 +41,7 @@ export const authLogin = credentials => {
     dispatch(authLoginRequest());
     try {
       await api.auth.login(credentials);
-      dispatch(authLoginSuccess());
-/*        const from = history.location.state?.from?.pathname || '/';
-      history.replace(from);  */
+      dispatch(authLoginSuccess());         
     } catch (error) {
       dispatch(authLoginFailure(error));
       throw error;
